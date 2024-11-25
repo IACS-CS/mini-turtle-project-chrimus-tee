@@ -7,6 +7,12 @@ export const runDemo = async (turtle, ti) => {
     }
   };
 
+  const drawStar = async (size) => {
+    for (let i = 0; i <= 4; i++){
+      
+    }
+  }
+
   let keepDrawing = true;
 
   while (keepDrawing) {
