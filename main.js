@@ -17,7 +17,7 @@ const turtle = new RealTurtle(canvas, {
   autoStart: false,
 });
 
-const ti = new TextInterface(textDiv, "My Drawing Program");
+const ti = new TextInterface(textDiv, "My Christmas Tree Drawing Program");
 
 /* Comment out the line below once you're writing
  * your own code -- you can also take a look at the

@@ -14,7 +14,7 @@ export const runDemo = async (turtle, ti) => {
     await turtle.right(90);
     await turtle.forward(size/2);
     await turtle.left(90);
-  };
+  }
   const drawTriangle = async (size) => {
     await turtle.setStrokeStyle('#228B22');  // Green color for the triangle outline
     await turtle.setFillStyle('#228B22');    // Green color for the triangle fill
@@ -31,7 +31,7 @@ export const runDemo = async (turtle, ti) => {
     await turtle.fill();  // Fill the triangle with the green color
     await turtle.right(90);
     await turtle.forward(size * .5);
-  };
+  }
   const drawStar = async (size, color) => {
     await turtle.setStrokeStyle(color); // set color
     await turtle.setFillStyle(color); 
@@ -50,7 +50,7 @@ export const runDemo = async (turtle, ti) => {
     await turtle.penUp();
     await turtle.left(18); // reset angle
     await turtle.back(size/2); //reset position(kinda)
-  };
+  }
   const drawStarQuestions = async() => {
     let starSize = await ti.promptNumber("How big of a star?"); // asks size
     await ti.output("what color would you like the star?") // asks color
@@ -88,7 +88,7 @@ export const runDemo = async (turtle, ti) => {
     await turtle.penUp();
     await turtle.right(90);
     await turtle.forward(size*.1);
-  };
+  }
   const drawOrnamentQuestions = async () => {
     let ornamentSize = await ti.promptNumber("How big would you like the ornaments?"); // asks size
     await ti.output("what color would you like the ornaments?"); // asks color
@@ -99,7 +99,7 @@ export const runDemo = async (turtle, ti) => {
       "yellow",
     ]);
     return {ornamentSize, ornamentColor}; // returns values for the drawOrnament function
-  };
+  }
   const drawTree = async (size) => {
     await turtle.setSpeed(1)
     await turtle.penUp();
@@ -117,11 +117,11 @@ export const runDemo = async (turtle, ti) => {
     let treeSize = await ti.promptNumber("How big would you like the tree?"); // asks size
     return {treeSize};
   }
- 
   const DrawChristmasPresent = async (size, color) => {
     await turtle.setFillStyle(color);
     await turtle.setStrokeStyle(color);
     await turtle.beginPath();
+    await turtle.penDown();
     await turtle.right(90);
     await turtle.forward(size/2)
     for (let i = 0; i < 3; i++) {
@@ -155,10 +155,9 @@ export const runDemo = async (turtle, ti) => {
     await turtle.penDown();
     await turtle.arc(size/8, 360, true);
     await turtle.arc(size/8, 360, false);
-  
-
-  };
-
+    
+    await turtle.penUp();
+  }
   const drawChristmasPresentQuestions = async ()=>{
       let presentSize = await ti.promptNumber("How big a present?");
       await ti.output("What color present?")
@@ -170,19 +169,46 @@ export const runDemo = async (turtle, ti) => {
         "gold",
       ]);
       return {presentSize, presentColor}
-    }
-    
+  }
+  const ornamentPositioning = async(ornamentSize, ornamentColor, treeSize) =>{
+    await turtle.left(180);
+    await turtle.forward(treeSize/6);
+    await turtle.left(30);
+    await turtle.forward(treeSize/5);
+    await turtle.left(150);
+    await drawOrnament(ornamentSize, ornamentColor);
+    await turtle.left(150);
+    await turtle.forward(treeSize/3);
+    await turtle.right(150);
+    await drawOrnament(ornamentSize, ornamentColor);
+    await turtle.right(140);
+    await turtle.forward(treeSize/2);
+    await turtle.left(140);
+    await drawOrnament(ornamentSize, ornamentColor);
+    await turtle.left(100);
+    await turtle.forward(treeSize/2);
+    await turtle.right(100);
+    await drawOrnament(ornamentSize, ornamentColor);
+    await turtle.right(180);
+    await turtle.forward(treeSize/4.5);
+    await turtle.right(180);
+  }
+  const presentPositioning = async(presentSize, presentColor, treeSize) =>{
+    await DrawChristmasPresent(presentSize, presentColor);
+    await turtle.right(90);
+    await turtle.forward(treeSize/2);
+    await turtle.left(90);
+    await DrawChristmasPresent(presentSize, presentColor);
+  }
   let keepDrawing = true;
   while (keepDrawing) {
-    const { treeSize } = await drawTreeQuestions();
+    const {treeSize} = await drawTreeQuestions();
     await drawTree(treeSize);
     const {starSize, starColor} = await drawStarQuestions();
     await drawStar(starSize, starColor);
-    const { ornamentSize, ornamentColor} = await drawOrnamentQuestions();
-    //make for loop for ornaments
-    await turtle.left(180);
-    await turtle.forward(treeSize/3);
-    await turtle.left(180);
-    await drawOrnament(ornamentSize, ornamentColor);
+    const {ornamentSize, ornamentColor} = await drawOrnamentQuestions();
+    await ornamentPositioning(ornamentSize, ornamentColor, treeSize);
+    const {presentSize, presentColor} = await drawChristmasPresentQuestions();
+    await presentPositioning(presentSize, presentColor, treeSize);
   }
 }
