@@ -1,0 +1,18 @@
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  place-content: end end;
+  margin: auto;
+  gap: 8px;
+  width: calc(100vw - 24px);
+}
+canvas {
+  width: min(95%, 95vh);
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px #222 3px;
+  display: block;
+  margin: auto;
+}
+#text-app {
+  margin-right: 32px;
+}
